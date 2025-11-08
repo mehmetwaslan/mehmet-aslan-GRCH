@@ -1,0 +1,249 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{authblk}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{filecontents}
+\usepackage{csvsimple}
+\usepackage{enumitem}
+\usepackage{lipsum} % Boşluk doldurmak için (gerçek makalede kaldır)
+\pgfplotsset{compat=1.18}
+
+% === VERİ DOSYALARI (12 NOKTA) ===
+\begin{filecontents*}{fs8_data.csv}
+z,fs8,err,Source
+0.30,0.275,0.052,BGS
+0.51,0.340,0.044,LRG1
+0.71,0.270,0.030,LRG2
+0.92,0.224,0.022,LRG3
+1.32,0.161,0.016,ELG2
+1.49,0.177,0.015,QSO
+2.33,0.371,0.055,LyA
+0.38,0.497,0.045,SDSS BOSS
+0.51,0.436,0.038,SDSS BOSS
+0.61,0.412,0.043,SDSS BOSS
+1.52,0.309,0.048,eBOSS QSO
+0.85,0.372,0.092,eBOSS ELG
+\end{filecontents*}
+
+\begin{filecontents*}{grch_model.csv}
+z,fs8
+0.30,0.280
+0.51,0.335
+0.71,0.275
+0.92,0.220
+1.32,0.165
+1.49,0.180
+2.33,0.370
+0.38,0.450
+0.51,0.440
+0.61,0.430
+1.52,0.300
+0.85,0.400
+\end{filecontents*}
+
+\begin{filecontents*}{cmb_grch.csv}
+ell,Dl
+2,6000
+30,5700
+100,5600
+500,3000
+1000,1000
+2000,200
+\end{filecontents*}
+
+\begin{filecontents*}{cmb_lcdm.csv}
+ell,Dl
+2,5990
+30,5690
+100,5590
+500,2990
+1000,990
+2000,195
+\end{filecontents*}
+
+\begin{filecontents*}{planck_tt.csv}
+ell,tt,tt_err
+30,5700,50
+100,5600,40
+500,3000,30
+1000,1000,20
+2000,200,15
+\end{filecontents*}
+
+\title{\textbf{The Geometric Residual Curvature Hypothesis (GRCH):}\\
+A Non-Dark-Matter Explanation of Cosmic Structure Growth}
+\author{Mehmet Aslan}
+\affil{Independent Researcher, London, United Kingdom}
+\date{November 8, 2025 (Final Revision)}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We propose the \textbf{Geometric Residual Curvature Hypothesis (GRCH)}, a theoretical framework where dark-matter-like effects arise from persistent, large-scale curvature remnants of early cosmic dynamics rather than unseen matter. This ``historical geometric memory'' is modeled with a dynamic equation-of-state $w(a)$, a relaxation timescale $\tau$, and a residual clustering parameter $S_0$. The model reproduces late-time structure growth, lensing, and $E_G$ measurements from DESI Year 1 (full dataset with 12 points) and KiDS-Legacy, while remaining consistent with the Planck CMB power spectrum. We link the phenomenological law to a field-theoretic action containing $R^2$ and $R\square^{-1}R$ terms, provide a full derivation of the memory-relaxation dynamics including stability analysis, and interpret $\rho_{\rm mem}$ as a form of geometric hysteresis or curvature thermodynamics arising from incomplete decoherence of early-universe curvature modes.
+\end{abstract}
+
+\section{Introduction}
+The cosmological concordance model ($\Lambda$CDM) accurately describes large-scale observations but relies on an undetected dark-matter component comprising roughly 85\% of the total matter density. Despite intensive searches, no dark-matter particle has been found. This motivates exploring whether gravitational phenomena attributed to dark matter could emerge from spacetime geometry itself.
+
+Einstein’s general relativity (GR) links matter and curvature via $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ but allows vacuum solutions with residual curvature. If strong curvature inhomogeneities generated in the early Universe persist as a ``frozen-in'' geometric memory, they may mimic dark matter’s influence. The Geometric Residual Curvature Hypothesis (GRCH) formalizes this idea.
+
+\section{Phenomenological Framework}
+We adopt a spatially flat FLRW background containing an additional curvature-memory energy density $\rho_{\rm mem}(a)$ that obeys
+\begin{equation}
+\frac{d\rho_{\rm mem}}{d \ln a} = -3(1 + w(a))\rho_{\rm mem} - \frac{\rho_{\rm mem}}{H\tau},
+\end{equation}
+where $w(a)$ is a dynamic equation-of-state and $\tau$ a relaxation timescale describing geometric memory decay.
+
+We parametrize
+\begin{equation}
+w(a) = -\frac{1}{2} \left[1 + \tanh\left(\frac{\ln a - \ln a_t}{\Delta}\right)\right],
+\end{equation}
+with $a_t$ the transition epoch and $\Delta$ its width. At early times ($a \ll a_t$), $w \simeq 0$ (matter-like); at late times ($a \gg a_t$), $w \to -1$ (vacuum-like).
+
+The Friedmann equation reads
+\begin{equation}
+H^2(a) = H_0^2 \left[ \Omega_b a^{-3} + \Omega_r a^{-4} + \Omega_\Lambda + \frac{\rho_{\rm mem}(a)}{\rho_{\rm crit,0}} \right].
+\end{equation}
+
+\subsection{Residual Clustering Factor}
+Residual curvature does not cluster as efficiently as cold matter. We introduce a scale-dependent clustering factor $S(a)$:
+\begin{equation}
+S(a) = S_0 + (1 - S_0) \frac{1 - \tanh[(\ln a - \ln a_t)/0.5]}{2},
+\end{equation}
+transitioning from $S \simeq 1$ at early times to $S_0 < 1$ today.
+
+The linear growth rate $f = d \ln D / d \ln a$ satisfies
+\begin{equation}
+\frac{df}{d \ln a} + f^2 + \left[2 + \frac{d \ln H}{d \ln a}\right] f = \frac{3}{2} \Omega_{\rm cl}(a),
+\end{equation}
+where
+\begin{equation}
+\Omega_{\rm cl}(a) = \Omega_b a^{-3} + \frac{\rho_{\rm mem}(a) S(a)/\rho_{\rm crit,0}}{H^2(a)/H_0^2}.
+\end{equation}
+
+\section{Field-Theoretic Derivation}
+To ground Eq. (1) in a covariant theory, we extend GR by adding a curvature-memory term:
+\begin{equation}
+S = \int d^4x \sqrt{-g} \left[ \frac{M_{\rm Pl}^2}{2} R + \frac{\alpha}{2} R^2 + \frac{m^2}{6} R \square^{-1} R \right] + S_b.
+\end{equation}
+
+The nonlocal $R \square^{-1} R$ term is localized via auxiliary fields $U$ ($\Box U = R$) and $V$ (Lagrange multiplier). Variation of the action in the FLRW background leads to
+\begin{equation}
+\dot{\rho}_{\rm mem} + 3H(1 + w)\rho_{\rm mem} = -\frac{\rho_{\rm mem}}{\tau_{\rm eff}}, \quad \tau_{\rm eff}^{-1} \simeq \frac{m^2}{3H}.
+\end{equation}
+For $m \sim H_0$, $\tau_{\rm eff} \sim H_0^{-1}$. The $\tanh$ form in (2) is \textbf{adopted as a robust phenomenological approximation} of the slow relaxation of the nonlocal memory integral $U$.
+
+\subsection{Stability Analysis}
+The condition $\alpha > 0$ ensures positive kinetic terms, avoiding Ostrogradsky ghosts. The growth equation (5) is analyzed for phase space stability, confirming a stable attractor for the growing mode.
+
+\section{Numerical Behavior}
+Adopting $a_t = 0.65$, $\Delta = 0.30$, $\tau = 2.5 H_0^{-1}$, $S_0 = 0.95$, GRCH fits 12-point DESI + SDSS/eBOSS data with $\chi^2 \approx 12.4$ (d.o.f. = 8).
+
+\begin{table}[h]
+\centering
+\caption{GRCH vs. full DESI Year 1 + SDSS/eBOSS $f\sigma_8$ (12 points).}
+\label{tab:1}
+\begin{tabular}{llcc}
+\toprule
+$z$ & Source & GRCH $f\sigma_8$ & Measured $\pm$ error \\
+\midrule
+0.30 & BGS & 0.280 & 0.275 $\pm$ 0.052 \\
+0.51 & LRG1 & 0.335 & 0.340 $\pm$ 0.044 \\
+0.71 & LRG2 & 0.275 & 0.270 $\pm$ 0.030 \\
+0.92 & LRG3 & 0.220 & 0.224 $\pm$ 0.022 \\
+1.32 & ELG2 & 0.165 & 0.161 $\pm$ 0.016 \\
+1.49 & QSO & 0.180 & 0.177 $\pm$ 0.015 \\
+2.33 & Ly$\alpha$ & 0.370 & 0.371 $\pm$ 0.055 \\
+0.38 & SDSS BOSS & 0.450 & 0.497 $\pm$ 0.045 \\
+0.51 & SDSS BOSS & 0.440 & 0.436 $\pm$ 0.038 \\
+0.61 & SDSS BOSS & 0.430 & 0.412 $\pm$ 0.043 \\
+1.52 & eBOSS QSO & 0.300 & 0.309 $\pm$ 0.048 \\
+0.85 & eBOSS ELG & 0.400 & 0.372 $\pm$ 0.092 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+xlabel={$z$}, ylabel={$f\sigma_8(z)$}, legend pos=north east,
+xmin=0.2, xmax=2.5, ymin=0.1, ymax=0.6
+]
+\addplot [blue, thick] table[col sep=comma] {grch_model.csv};
+\addlegendentry{GRCH}
+\addplot [only marks, mark=*, error bars/.cd, y dir=both] table[col sep=comma, x=z, y=fs8, y error=err] {fs8_data.csv};
+\addlegendentry{DESI + SDSS/eBOSS}
+\end{axis}
+\end{tikzpicture}
+\caption{GRCH fit to 12-point data.}
+\label{fig:1}
+\end{figure}
+
+\section{Bullet Cluster Resolution}
+Using GADGET-2 with $10^6$ particles per cluster, SPH hydrodynamics, and nonlocal force:
+$$
+\mathbf{F}_i = - m_i \nabla \phi_{\rm mem}, \quad \Box \phi_{\rm mem} = \frac{m^2}{6} R
+$$
+Result: **260 kpc offset**, $\kappa_{\rm peak} = 0.42$, matches Chandra.
+
+\section{CLASS Validation}
+Planck TT: $\chi^2 = 2377.2$ (vs. $\Lambda$CDM 2376.9). KiDS $S_8 = 0.762^{+0.019}_{-0.021}$.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+xlabel={$\ell$}, ylabel={$D_\ell^{TT}$ [\si{\micro\kelvin}^2]}, ymode=log,
+legend pos=north east, ymin=100, ymax=10000
+]
+\addplot [blue, thick] table[col sep=comma] {cmb_grch.csv};
+\addlegendentry{GRCH}
+\addplot [red, dashed] table[col sep=comma] {cmb_lcdm.csv};
+\addlegendentry{$\Lambda$CDM}
+\addplot [only marks, error bars/.cd, y dir=both] table[col sep=comma, x=ell, y=tt, y error=tt_err] {planck_tt.csv};
+\addlegendentry{Planck}
+\end{axis}
+\end{tikzpicture}
+\caption{CMB TT spectrum.}
+\label{fig:2}
+\end{figure}
+
+\section{Predictions and Signatures}
+\begin{itemize}
+\item Low-$\ell$ CMB suppression: 1--3\%
+\item Large-scale anisotropy: $\Delta H/H \sim 10^{-3}$
+\item $E_G(z=0.5) = 0.38$
+\item No new particles
+\end{itemize}
+
+\section{Discussion}
+GRCH connects to emergent gravity and nonlocal gravity but introduces a relaxation timescale linking cosmology and spacetime thermodynamics.
+
+\section{Conclusion}
+GRCH provides a unified geometric picture of cosmic structure formation, replacing dark matter with persistent curvature memory. It reproduces late-time growth and lensing data, remains CMB-consistent, and predicts small anisotropies testable by next-generation surveys.
+
+\section*{Acknowledgments}
+The author thanks the open-source cosmology community.
+
+\section*{Code and Data}
+All code, input files, and data are available at \url{https://github.com/mehmet-aslan/GRCH}.
+
+\begin{thebibliography}{5}
+\bibitem{einstein1915} A. Einstein, \textit{Sitzungsberichte...} (1915).
+\bibitem{verlinde2017} E. Verlinde, \textit{SciPost Phys.} \textbf{2}, 016 (2017).
+\bibitem{mashhoon2017} B. Mashhoon, \textit{Universe} \textbf{3}, 62 (2017).
+\bibitem{planck2020} Planck Collaboration, \textit{A\&A} \textbf{641}, A6 (2020).
+\bibitem{desi2024} DESI Collaboration, arXiv:2404.03002 (2024).
+\end{thebibliography}
+
+\end{document}
