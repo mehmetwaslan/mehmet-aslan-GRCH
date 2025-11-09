@@ -1,5 +1,0 @@
-# Bullet Cluster Params
-Softening = 5 kpc
-Particles = 1e6
-Velocity = 3000 km/s
-# GRCH nonlocal: m = H0, alpha = >0
