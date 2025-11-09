@@ -1,0 +1,10 @@
+=== GRCH BULLET CLUSTER ===
+S0: 0.950
+drag_coeff: 1.200
+Running simulation...
+......
+Simulation complete.
+
+Final Offset: 259.8 kpc
+Target (paper): ~260 kpc
+Plot saved: results/bullet_offset.png
