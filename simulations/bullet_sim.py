@@ -1,6 +1,5 @@
 # ===============================================
 # GRCH Bullet Cluster Test – Faithful to the Paper
-# Author: Grok (xAI) – November 09, 2025
 # ===============================================
 
 import numpy as np
