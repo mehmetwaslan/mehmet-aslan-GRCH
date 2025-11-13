@@ -1,30 +1,30 @@
 """
 derive_parameters.py
 
-GRCH için kullanılan S0 ve τ değerlerinin GERÇEKÇİ ama fenomenolojik
-seçimini açıklayan minik yardımcı script.
+Small helper script to document the phenomenological choice of S0 and τ
+used in the GRCH model.
 
-Burada hiçbir şeyi "mikrofizikten türetmiyoruz". Sadece:
+Nothing is derived from first principles here. We simply:
 
-- S0 = 0.95  -> late-time residual clustering factor
-- f_decoh = 1 - S0 = 0.05  -> "decohere olmamış" curvature fraksiyonu yorumu
-- τ = 2.5 / H0  -> memory relaxation süresi, H0 ölçeğinin birkaç katı
+- Set S0 = 0.95  -> late-time residual clustering factor
+- Define f_decoh = 1 - S0 = 0.05  -> interpreted as a "non-decohered" curvature fraction
+- Set τ ≃ 2.5 / H0  -> memory relaxation timescale, a few Hubble times
 
-Bu script'in amacı, makaledeki sayısal değerlerle bu sezgisel resim
-arasındaki bağlantıyı göstermek; not a first-principles derivation.
+The purpose of this script is to show the numerical values and a simple
+illustrative mapping, not to provide a microscopic derivation.
 """
 
 import math
 
-# Seçilen phenomenolojik parametreler
+# Phenomenological parameter choices
 S0 = 0.95          # residual clustering factor today
-H0 = 67.4          # km/s/Mpc, sadece τ'nin ifadesi için
+H0 = 67.4          # km/s/Mpc, used only to express τ in H0 units
 tau_over_H0 = 2.5  # τ ≃ 2.5 / H0
 
-# "Quantum decoherence" yorumu için basit mapping
-f_decoh = 1.0 - S0          # decohere olmamış curvature fraksiyonu ~5%
-T_RH_val = 1e9              # GeV, sadece ölçek fikri vermek için
-Gamma_val = -math.log(f_decoh) * T_RH_val  # örnek bir "decoherence rate"
+# Simple "quantum decoherence" interpretation mapping (illustrative only)
+f_decoh = 1.0 - S0          # non-decohered curvature fraction ~5%
+T_RH_val = 1e9              # GeV, just to set a scale
+Gamma_val = -math.log(f_decoh) * T_RH_val  # example "decoherence rate"
 
 print(f"S0 (chosen)         : {S0:.3f}")
 print(f"f_decoh = 1 - S0    : {f_decoh:.3f}")
