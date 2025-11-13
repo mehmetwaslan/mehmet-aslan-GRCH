@@ -1,22 +1,35 @@
-# derive_parameters.py
-# GRCH: S0 and tau derivation - CORRECTED
-# Matches paper: S0 = 0.95
+"""
+derive_parameters.py
 
-import sympy as sp
+GRCH için kullanılan S0 ve τ değerlerinin GERÇEKÇİ ama fenomenolojik
+seçimini açıklayan minik yardımcı script.
 
-# Decoherence fraction: f_decoh = exp(-Gamma * t_reheat)
-T_RH_val = 1e9
-f_decoh_target = 0.05
-Gamma_val = -sp.log(f_decoh_target) * T_RH_val
+Burada hiçbir şeyi "mikrofizikten türetmiyoruz". Sadece:
 
-S0 = 1 - sp.exp(-Gamma_val / T_RH_val)
-H0 = 67.4
-tau_val = 2.5 / H0
+- S0 = 0.95  -> late-time residual clustering factor
+- f_decoh = 1 - S0 = 0.05  -> "decohere olmamış" curvature fraksiyonu yorumu
+- τ = 2.5 / H0  -> memory relaxation süresi, H0 ölçeğinin birkaç katı
 
-print("=== GRCH Parameter Derivation (CORRECTED) ===")
-print(f"Target f_decoh: {f_decoh_target}")
-print(f"Derived Gamma: {float(Gamma_val):.2e} GeV")
-print(f"Derived S0: {float(S0):.3f}")
-print(f"Derived τ: {tau_val:.2f} / H₀")
-print("Paper values: S0 = 0.95, τ = 2.5/H₀")
-print("MATCH ACHIEVED")
+Bu script'in amacı, makaledeki sayısal değerlerle bu sezgisel resim
+arasındaki bağlantıyı göstermek; not a first-principles derivation.
+"""
+
+import math
+
+# Seçilen phenomenolojik parametreler
+S0 = 0.95          # residual clustering factor today
+H0 = 67.4          # km/s/Mpc, sadece τ'nin ifadesi için
+tau_over_H0 = 2.5  # τ ≃ 2.5 / H0
+
+# "Quantum decoherence" yorumu için basit mapping
+f_decoh = 1.0 - S0          # decohere olmamış curvature fraksiyonu ~5%
+T_RH_val = 1e9              # GeV, sadece ölçek fikri vermek için
+Gamma_val = -math.log(f_decoh) * T_RH_val  # örnek bir "decoherence rate"
+
+print(f"S0 (chosen)         : {S0:.3f}")
+print(f"f_decoh = 1 - S0    : {f_decoh:.3f}")
+print(f"Example Γ (T_RH=1e9): {Gamma_val:.3e} (arbitrary mapping)")
+print(f"τ ≃ {tau_over_H0:.1f} / H0")
+
+print("\nNOTE: S0 and τ are phenomenological choices,")
+print("      not derived from first principles in this script.")
