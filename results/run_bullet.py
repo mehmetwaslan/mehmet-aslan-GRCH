@@ -152,4 +152,3 @@ plt.close()
 print(f"Offset: {offset:.1f} kpc")
 print(f"κ_peak: {kappa_peak:.2f}")
 print("PNG: results/bullet_offset.png")
-
