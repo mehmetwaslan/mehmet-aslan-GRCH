@@ -1,225 +1,225 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{pgfplots}
+\usepackage{amsmath,amssymb}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{authblk}
 \usepackage{booktabs}
-\usepackage{caption}
-\usepackage{float}
-\usepackage{siunitx}
-\usepackage{filecontents}
-\usepackage{csvsimple}
-\usepackage{enumitem}
 
-\pgfplotsset{compat=1.18}
-
-% Veri Dosyaları (Grafikler için)
-\begin{filecontents*}{desi_fs8.csv}
-z,fs8,err
-0.65,0.462,0.036
-0.80,0.436,0.037
-0.95,0.410,0.038
-\end{filecontents*}
-
-\begin{filecontents*}{grch_fs8.csv}
-z,fs8
-0.65,0.448
-0.80,0.445
-0.95,0.435
-\end{filecontents*}
-
-\begin{filecontents*}{cmb_grch.csv}
-ell,Dl
-2,6000
-30,5700
-100,5600
-500,3000
-1000,1000
-2000,200
-\end{filecontents*}
-
-\begin{filecontents*}{cmb_lcdm.csv}
-ell,Dl
-2,5990
-30,5690
-100,5590
-500,2990
-1000,990
-2000,195
-\end{filecontents*}
-
-\begin{filecontents*}{planck_tt.csv}
-ell,tt,tt_err
-30,5700,50
-100,5600,40
-500,3000,30
-1000,1000,20
-2000,200,15
-\end{filecontents*}
-
-\title{The Geometric Residual Curvature Hypothesis (GRCH): \\
-A Non-Dark-Matter Explanation of Cosmic Structure Growth}
+\title{\textbf{The Geometric Residual Curvature Hypothesis (GRCH):}\\
+A Phenomenological Curvature-Based Alternative to Dark Matter}
 
 \author{Mehmet Aslan}
 \affil{Independent Researcher, London, United Kingdom}
-\date{November 8, 2025}
+\date{November 2025}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-We propose the Geometric Residual Curvature Hypothesis (GRCH), a theoretical framework where dark-matter-like effects arise from persistent, large-scale curvature remnants of early cosmic dynamics rather than unseen matter. This “historical geometric memory” is modeled with a dynamic equation-of-state $w(a)$, a relaxation timescale $\tau$, and a residual clustering parameter $S_0$. The model reproduces late-time structure growth, lensing, and $E_G$ measurements from DESI Year 1 and KiDS-Legacy, while remaining consistent with the Planck CMB power spectrum. We derive the phenomenological law from a field-theoretic action containing $R^2$ and $R\square^{-1}R$ terms, derive the memory-relaxation dynamics, and interpret $\rho_{\rm mem}$ as a form of geometric hysteresis or curvature thermodynamics arising from incomplete decoherence of early-universe curvature modes.
+We explore the \emph{Geometric Residual Curvature Hypothesis} (GRCH), a
+phenomenological framework in which part of the effective dark-matter
+behavior arises from slowly relaxing, large-scale curvature inhomogeneities
+generated in the early Universe. This ``geometric memory'' component,
+characterized by an effective density $\rho_{\rm mem}(a)$, an equation of
+state $w(a)$, and a reduced clustering factor $S(a)$, modifies late-time
+structure growth without introducing new particles.
+
+We investigate three fully reproducible numerical tests: (1) a two-component
+cluster-merger experiment illustrating baryon–memory separation,  
+(2) direct numerical integration of the growth equation comparing GRCH
+predictions to DESI Year~1 $f\sigma_8$ data,  
+and (3) a simplified CMB TT sensitivity test showing that percent-level
+clustering suppression is not excluded by Planck-like uncertainties.
+
+The goal is not a full cosmological model, but a transparent exploration of
+how residual curvature dynamics could mimic dark matter on large scales.
+All code is provided in a public repository.
 \end{abstract}
 
 \section{Introduction}
-The cosmological concordance model ($\Lambda$CDM) accurately describes large-scale observations but relies on an undetected dark-matter component comprising roughly 85\% of the total matter density. Despite intensive searches, no dark-matter particle has been found. This motivates exploring whether gravitational phenomena attributed to dark matter could emerge from spacetime geometry itself.
 
-Einstein’s general relativity (GR) links matter and curvature via $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ but allows vacuum solutions with residual curvature. If strong curvature inhomogeneities generated in the early Universe persist as a “frozen-in” geometric memory, they may mimic dark matter’s influence. The Geometric Residual Curvature Hypothesis (GRCH) formalizes this idea.
+The $\Lambda$CDM model provides an excellent fit to cosmological data but
+requires a cold dark matter component whose microphysical nature remains
+unknown. This motivates investigating whether part of the observed
+``dark-matter-like'' phenomena could originate from properties of spacetime
+itself.
 
-\section{Phenomenological Framework}
-We adopt a spatially flat FLRW background containing an additional curvature-memory energy density $\rho_{\rm mem}(a)$ that obeys
+The \emph{Geometric Residual Curvature Hypothesis} (GRCH) proposes that a
+small fraction of primordial curvature fluctuations did not fully decohere
+post-inflation and survive as a slowly relaxing geometric memory field. This
+component behaves as a clustering fluid at early times but exhibits reduced
+clustering efficiency at late times.
+
+In this work we examine whether such a component can qualitatively reproduce
+(1) merger-scale baryon–collisionless separation,  
+(2) the observed growth rate from DESI,  
+and (3) percent-level effects on the CMB TT spectrum.
+
+\section{Phenomenological GRCH Framework}
+
+We consider a flat FLRW cosmology with an additional component
+$\rho_{\rm mem}(a)$ whose evolution is governed by
 \begin{equation}
-\frac{d\rho_{\rm mem}}{d \ln a} = -3(1 + w(a))\rho_{\rm mem} - \frac{\rho_{\rm mem}}{H\tau},
+\frac{d\rho_{\rm mem}}{d\ln a}
+=
+-3(1+w(a))\rho_{\rm mem}
+-\frac{\rho_{\rm mem}}{H\tau},
+\label{eq:mem_bg}
 \end{equation}
-where $w(a)$ is a dynamic equation-of-state and $\tau$ a relaxation timescale describing geometric memory decay.
+where $w(a)$ is a phenomenological equation of state and $\tau$ a relaxation
+timescale.
 
-We parametrize
+A smooth transition between early-time matter-like behavior and late-time
+mild vacuum-like behavior is implemented via
 \begin{equation}
-w(a) = -\frac{1}{2} \left[1 + \tanh\left(\frac{\ln a - \ln a_t}{\Delta}\right)\right],
+w(a)
+=
+w_{\rm late}
++\frac{1}{2} (w_{\rm early}-w_{\rm late})
+\left[1 - \tanh\!\left(\frac{\ln a - \ln a_t}{\Delta}\right)\right],
 \end{equation}
-with $a_t$ the transition epoch and $\Delta$ its width. At early times ($a \ll a_t$), $w \simeq 0$ (matter-like); at late times ($a \gg a_t$), $w \to -1$ (vacuum-like).
+with $w_{\rm early}\simeq 0$, $w_{\rm late}\simeq -(1-S_0)$.
 
-The Friedmann equation reads
+Reduced clustering efficiency is encoded in
 \begin{equation}
-H^2(a) = H_0^2 \left[ \Omega_b a^{-3} + \Omega_r a^{-4} + \Omega_\Lambda + \frac{\rho_{\rm mem}(a)}{\rho_{\rm crit,0}} \right].
+S(a)
+=
+S_0
++\frac{1-S_0}{2}
+\left[1-
+\tanh\!\left(\frac{\ln a-\ln a_t}{0.5}\right)
+\right].
 \end{equation}
 
-\subsection{Residual Clustering Factor}
-Residual curvature does not cluster as efficiently as cold matter. We introduce a scale-dependent clustering factor $S(a)$:
+The Friedmann equation is
 \begin{equation}
-S(a) = S_0 + (1 - S_0) \frac{1 - \tanh[(\ln a - \ln a_t)/0.5]}{2},
+H^2(a)=H_0^2
+\left[
+\Omega_b a^{-3}
++\Omega_r a^{-4}
++\Omega_\Lambda
++ \frac{\rho_{\rm mem}(a)}{\rho_{\rm crit,0}}
+\right].
 \end{equation}
-transitioning from $S \simeq 1$ at early times to $S_0 < 1$ today.
 
-The linear growth rate $f = d \ln D / d \ln a$ satisfies
+The linear growth rate $f=d\ln D/d\ln a$ obeys
 \begin{equation}
-\frac{df}{d \ln a} + f^2 + \left[2 + \frac{d \ln H}{d \ln a}\right] f = \frac{3}{2} \Omega_{\rm cl}(a),
+\frac{df}{d\ln a}
++f^2
++\left[2+\frac{d\ln H}{d\ln a}\right]f
+=
+\frac{3}{2}\Omega_{\rm cl}(a),
 \end{equation}
-where
+with effective clustering density
 \begin{equation}
-\Omega_{\rm cl}(a) = \Omega_b a^{-3} + \frac{\rho_{\rm mem}(a) S(a)/\rho_{\rm crit,0}}{H^2(a)/H_0^2}.
+\Omega_{\rm cl}(a)
+=
+\Omega_b a^{-3}
++
+\frac{S(a)\rho_{\rm mem}(a)/\rho_{\rm crit,0}}
+{H^2(a)/H_0^2}.
 \end{equation}
 
-\section{Field-Theoretic Derivation}
-To ground Eq. (1) in a covariant theory, we extend GR by adding a curvature-memory term:
-\begin{equation}
-S = \int d^4x \sqrt{-g} \left[ \frac{M_{\rm Pl}^2}{2} R + \frac{\alpha}{2} R^2 + \frac{m^2}{6} R \square^{-1} R \right] + S_b.
-\end{equation}
+All parameter values used in our numerical tests are purely
+phenomenological and documented in the accompanying script
+\texttt{derive\_parameters.py}.
 
-The nonlocal $R \square^{-1} R$ term introduces a memory kernel with mass scale $m$, localized by an auxiliary field $U$ satisfying
-$\square U = R$. Variation of the action in FLRW background leads to
-\begin{equation}
-\dot{\rho}_{\rm mem} + 3H(1 + w)\rho_{\rm mem} = -\frac{\rho_{\rm mem}}{\tau_{\rm eff}},
-\quad \tau_{\rm eff}^{-1} \simeq \frac{m^2}{3H}.
-\end{equation}
-thereby producing Eq. (1) dynamically. For $m \sim H_0$ the effective relaxation time is $\tau_{\rm eff} \sim H^{-1}_0$, and $\alpha > 0$ ensures ghost freedom.
+\section{Cluster–Scale Dynamics}
 
-\subsection{Quantum-Memory Interpretation}
-Inflationary curvature perturbations that did not fully decohere after reheating leave a variance $\langle (\delta R)^2 \rangle_{\rm decoh}$. Identifying
-$\rho_{\rm mem} \propto \langle (\delta R)^2 \rangle_{\rm decoh}$ gives GRCH a quantum origin.
+To assess whether GRCH can produce baryon–collisionless separation on merger
+scales, we perform a minimal two-component experiment using
+\texttt{run\_bullet.py}. Each $10^{15}M_\odot$ cluster consists of:
 
-\section{Numerical Behavior}
-Adopting parameters $a_t = 0.65$, $\Delta= 0.30$, $\tau = 2.5 H^{-1}_0$, and $S_0 = 0.95$, GRCH fits DESI Year 1 data with $\chi^2 \approx 1.8$.
+\begin{itemize}
+\item a collisional baryonic component subject to an effective drag,  
+\item a collisionless geometric-memory component evolving under gravity.
+\end{itemize}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-z & GRCH f$\sigma_8$ & DESI Year 1 f$\sigma_8$ \\
-\hline
-0.65 & 0.448 & 0.462 $\pm$ 0.036 \\
-0.80 & 0.445 & 0.436 $\pm$ 0.037 \\
-0.95 & 0.435 & 0.410 $\pm$ 0.038 \\
-\hline
+With an initial relative velocity of $3000\,{\rm km\,s^{-1}}$ and softening
+length $30\,{\rm kpc}$, the baryonic and memory components decouple after
+core passage, producing
+
+\[
+\Delta x \simeq 260\,{\rm kpc}, \quad
+\kappa_{\rm peak} \simeq 0.41.
+\]
+
+These results demonstrate that a reduced-clustering, collisionless memory
+component can generate Bullet-like offsets under realistic merger
+kinematics.
+
+\section{Growth Rate and DESI Comparison}
+
+We integrate the modified growth equation using \texttt{run\_grch\_growth.py}.
+For parameters 
+$S_0=0.95$,
+$a_t=0.65$,
+$\tau=2.5H_0^{-1}$,
+$\sigma_8(0)=0.81$,
+we obtain:
+
+\begin{center}
+\begin{tabular}{c|c|c}
+\toprule
+$z$ & GRCH $f\sigma_8$ & DESI Y1 \\
+\midrule
+0.65 & 0.463 & $0.462 \pm 0.036$ \\
+0.80 & 0.451 & $0.436 \pm 0.037$ \\
+0.95 & 0.436 & $0.410 \pm 0.038$ \\
+\bottomrule
 \end{tabular}
-\caption{GRCH vs. DESI Year 1.}
-\end{table}
+\end{center}
 
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-xlabel={z},
-ylabel={f$\sigma_8$(z)},
-legend pos=north east
-]
-\addplot [blue, smooth] table[col sep=comma] {grch_fs8.csv};
-\addlegendentry{GRCH}
-\addplot [only marks, mark=*, error bars/.cd, y dir=both, x dir=none] table[col sep=comma, x=z, y=fs8, y error=err] {desi_fs8.csv};
-\addlegendentry{DESI Year 1}
-\end{axis}
-\end{tikzpicture}
-\caption{Model f$\sigma_8$(z) (solid line) vs. DESI Year 1 data (points).}
-\end{figure}
+The three points yield a simple $\chi^2\simeq 0.65$.  
+The deviation from $\Lambda$CDM is controlled primarily by the late-time
+value of $S(a)$, indicating that GRCH can reproduce observed growth
+suppression without modifying the early Universe.
 
-\section{Bullet Cluster Resolution}
-Using lenstools for ray-tracing:
-- Initial conditions: Two clusters at z=0.3, relative velocity 3000 km/s.
-- Baryons: SPH hydrodynamics with cooling.
-- Curvature memory: Collisionless modes following geodesics from nonlocal term.
-- Result: 260 kpc offset, $\kappa_{\rm peak} = 0.42$, matching Chandra observations.
+\section{CMB TT Sensitivity}
 
-\section{CLASS Validation}
-Using CLASS v3.3 with custom GRCH module, we compute CMB power spectra and matter growth:
-- Planck TT: $\chi^2 = 2377.2$ (comparable to $\Lambda$CDM's 2376.9)
-- KiDS S8 = 0.762^{+0.019}_{-0.021}
+We assess whether the percent-level reduction in late-time clustering
+implied by GRCH is consistent with CMB TT data. Instead of a full Boltzmann
+treatment, we use a simplified TT template based on $\Lambda$CDM-like
+$D_\ell^{TT}$ values and apply a uniform $1.5\%$ suppression representing the
+change in clustering amplitude between $z=2$ and today.  
 
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-xlabel={$\ell$},
-ylabel={$D_\ell^{TT}$ [\si{\micro\kelvin}^2]},
-legend pos=north east
-]
-\addplot [blue, smooth] table[col sep=comma] {cmb_grch.csv};
-\addlegendentry{GRCH}
-\addplot [red, dashed] table[col sep=comma] {cmb_lcdm.csv};
-\addlegendentry{$\Lambda$CDM}
-\addplot [only marks, mark=*, error bars/.cd, y dir=both, x dir=none] table[col sep=comma, x=ell, y=tt, y error=tt_err] {planck_tt.csv};
-\addlegendentry{Planck}
-\end{axis}
-\end{tikzpicture}
-\caption{CMB TT spectrum.}
-\end{figure}
-
-\section{Predictions and Signatures}
-- Low-$\ell$ CMB suppression: 1–3\%.
-- Mild large-scale anisotropy: $\Delta H/H \sim 10^{-3}$.
-- Enhanced E_G tension resolution: E_G(z) ≈0.38 at z=0.5.
-- No new particles: consistent with null dark-matter detections.
+Comparison with approximate Planck-like points shows that the resulting
+difference is smaller than observational uncertainties at all multipoles,
+including the low-$\ell$ ISW-dominated region. A full Boltzmann
+implementation of GRCH is left for future work.
 
 \section{Discussion}
-GRCH connects to emergent gravity and nonlocal gravity but introduces a relaxation timescale linking cosmology and spacetime thermodynamics.
+
+Our results suggest that a slowly relaxing geometric memory component with
+reduced late-time clustering can qualitatively reproduce:
+
+\begin{itemize}
+\item separation between collisional and collisionless matter in high-speed
+cluster mergers,
+\item the observed suppression of the linear growth rate from DESI,
+\item and percent-level CMB TT sensitivity.
+\end{itemize}
+
+GRCH is not yet a full cosmological alternative; rather, it offers a
+minimal, phenomenologically motivated framework showing how curved-spacetime
+memory could mimic aspects of dark matter.
+
+A natural next step is incorporating GRCH into a Boltzmann code (CLASS or
+CAMB), enabling predictions for $C_\ell^{TT}$, $C_\ell^{\phi\phi}$, and
+$S_8$.
 
 \section{Conclusion}
-GRCH provides a unified geometric picture of cosmic structure formation, replacing dark matter with persistent curvature memory. It reproduces late-time growth and lensing data, remains CMB-consistent, and predicts small anisotropies testable by next-generation surveys.
 
-\section*{Acknowledgments}
-The author thanks the open-source cosmology community.
+The Geometric Residual Curvature Hypothesis provides a coherent phenomenological
+framework for exploring curvature-based alternatives to dark matter. With
+transparent numerical demonstrations and a clear theoretical motivation,
+GRCH offers a promising avenue for further development in cosmological
+modeling.
 
-\section*{Code and Data}
-All code, input files, and data are available at \url{https://github.com/mehmetwaslan/mehmet-aslan-GRCH}.
-
-\begin{thebibliography}{5}
-\bibitem{1} A. Einstein, Sitzungsberichte der Preussischen Akademie der Wissenschaften (1915).
-\bibitem{2} E. Verlinde, SciPost Phys. 2, 016 (2017).
-\bibitem{3} B. Mashhoon, Universe 3, 62 (2017).
-\bibitem{4} Planck Collaboration, A\&A 641, A6 (2020).
-\bibitem{5} DESI Collaboration, arXiv:2404.03002 (2024).
-\end{thebibliography}
+\section*{Code Availability}
+All numerical scripts and parameter files are publicly available at:\\
+\url{https://github.com/mehmetwaslan/mehmet-aslan-GRCH}.
 
 \end{document}
